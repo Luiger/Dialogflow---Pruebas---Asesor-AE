@@ -56,7 +56,7 @@ webApp.post('/cx-logger-webhook', async (req, res) => {
         } else if (req.body.intentInfo && req.body.intentInfo.lastMatchedIntent) {
             matchType = 'INTENT';
         } else if (req.body.pageInfo && req.body.pageInfo.currentPage) {
-            matchType = 'DATA_STORE'; // O un valor que te sirva para identificarlo
+            matchType = 'PAGE_TRANSITION'; // O un valor que te sirva para identificarlo
         } else if (req.body.match.event === 'sys.no-match-default') {
             matchType = 'NO_MATCH'; 
         }
