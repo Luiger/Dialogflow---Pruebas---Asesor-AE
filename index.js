@@ -57,17 +57,10 @@ webApp.post('/cx-logger-webhook', async (req, res) => {
             matchType = 'INTENT';
         } else if (req.body.pageInfo && req.body.pageInfo.currentPage) {
             matchType = 'DATA_STORE'; // O un valor que te sirva para identificarlo
-        } 
+        } else if (req.body.match.event === 'sys.no-match-default') {
+            matchType = 'NO_MATCH'; 
+        }
         // Puedes agregar más lógica para identificar 'NO_MATCH', 'EVENT', etc.
-
-        if (req.body.match && req.body.match.matchType === 'EVENT') {
-    if (req.body.match.event === 'sys.no-match-default') {
-        matchType = 'NO_MATCH'; // O simplemente 'NO_MATCH'
-    } else if (req.body.match.event === 'sys.no-input-default') {
-        matchType = 'NO_INPUT'; // O simplemente 'NO_INPUT'
-    }
-    // Puedes añadir más 'else if' para otros eventos personalizados
-}
 
         const detectedIntentName = (req.body.intentInfo && req.body.intentInfo.displayName) ? req.body.intentInfo.displayName : 'N/A';
 
