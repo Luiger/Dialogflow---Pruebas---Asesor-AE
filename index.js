@@ -56,9 +56,17 @@ webApp.post('/cx-logger-webhook', async (req, res) => {
         } else if (req.body.intentInfo && req.body.intentInfo.lastMatchedIntent) {
             matchType = 'INTENT';
         } else if (req.body.pageInfo && req.body.pageInfo.currentPage) {
-            matchType = 'PAGE_TRANSITION'; // O un valor que te sirva para identificarlo
-        }
+            matchType = 'DATA_STORE'; // O un valor que te sirva para identificarlo
+        } 
         // Puedes agregar más lógica para identificar 'NO_MATCH', 'EVENT', etc.
+
+        if (req.body.match && req.body.match.matchType) {
+            if (req.body.match.matchType === 'NO_MATCH') {
+                matchType = 'UsuarioNoEntendido'; // Valor personalizado
+            } else {
+                matchType = req.body.match.matchType; // Para otros tipos como 'INTENT', 'EVENT', etc.
+            }
+        } 
 
         const detectedIntentName = (req.body.intentInfo && req.body.intentInfo.displayName) ? req.body.intentInfo.displayName : 'N/A';
 
