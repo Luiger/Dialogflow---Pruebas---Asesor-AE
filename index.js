@@ -60,13 +60,14 @@ webApp.post('/cx-logger-webhook', async (req, res) => {
         } 
         // Puedes agregar más lógica para identificar 'NO_MATCH', 'EVENT', etc.
 
-        if (req.body.match && req.body.match.matchType) {
-            if (req.body.match.matchType === 'NO_MATCH') {
-                matchType = 'UsuarioNoEntendido'; // Valor personalizado
-            } else {
-                matchType = req.body.match.matchType; // Para otros tipos como 'INTENT', 'EVENT', etc.
-            }
-        } 
+        if (req.body.match && req.body.match.matchType === 'EVENT') {
+    if (req.body.match.event === 'sys.no-match-default') {
+        matchType = 'NO_MATCH'; // O simplemente 'NO_MATCH'
+    } else if (req.body.match.event === 'sys.no-input-default') {
+        matchType = 'NO_INPUT'; // O simplemente 'NO_INPUT'
+    }
+    // Puedes añadir más 'else if' para otros eventos personalizados
+}
 
         const detectedIntentName = (req.body.intentInfo && req.body.intentInfo.displayName) ? req.body.intentInfo.displayName : 'N/A';
 
